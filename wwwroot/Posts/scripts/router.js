@@ -1,6 +1,19 @@
 const routes = { 
-    '404': '/posts/pages/404.html',
-    '/api/posts': '/posts/pages/home.html',
+    '404': {
+        title: '404 - Not Found',
+        path: '/posts/pages/404.html',
+        onload: () => {}
+    },
+    '/api/posts': {
+        title: 'Posts',
+        path: '/posts/pages/home.html',
+        onload: loadHome
+    },
+    '/api/posts/create': {
+        title: 'Create Post',
+        path: '/posts/pages/form.html',
+        onload: loadForm
+    }
 };
 
 function route(event) {
@@ -11,8 +24,11 @@ function route(event) {
 async function handleLocation() {
     const path = window.location.pathname;
     const route = routes[path] || routes['404'];
-    const html = await fetch(route).then(response => response.text());
+    const html = await fetch(route.path).then(response => response.text());
+    
+    window.title = route.title;
     document.getElementById("page").innerHTML = html;
+    route.onload();
 }
 
 window.onpopstate = handleLocation;

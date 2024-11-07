@@ -54,20 +54,34 @@ body {
     flex-grow: 1;
 }
 
-#home #content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: #133E87;
-    margin-top: -10px;
-}
-
 #home h1 {
     font-family: "Cherry Bomb One";
     font-size: 5em;
     color: #1B4242;
     margin: 1rem;
 }
+
+#home #content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #133E87;
+    margin-top: -10px;
+}
+
+#home #content .post {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    padding: 1em;
+}
+
+#home #content .post .info {
+    display: flex;
+    flex-direction: column;
+}
+
 
 .text-input {
     padding: 0.5em 1em;
