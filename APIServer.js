@@ -29,7 +29,7 @@ export default class APIServer {
         this.middlewaresPipeline.add(handleStaticResourceRequest);
 
         // API middlewares
-        this.middlewaresPipeline.add(CachedRequests.get);
+        //this.middlewaresPipeline.add(CachedRequests.get);
         this.middlewaresPipeline.add(router.Registered_EndPoint);
         this.middlewaresPipeline.add(router.API_EndPoint);
     }

@@ -28,7 +28,7 @@ export default class Response {
         }
     }
     end(content = null) {
-        if (content) 
+        if (content)
             this.res.end(content);
         else
             this.res.end();
