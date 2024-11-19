@@ -5,7 +5,12 @@
         <input type="text" name="Title" placeholder="Title">
         <input type="text" name="Text" placeholder="Text">
         <input type="text" name="Category" placeholder="Category">
-        <input type="file" name="Image" placeholder="Image">
+        <div class='imageUploader'  
+            controlId='PhotoImageData' 
+            imageSrc='/assets/no_image.png' 
+            newImage="true/false"
+            waitingImage="Loading_icon.gif">
+        </div>
         <input id="form-submit" type="submit" value="Submit">
     </form>
 </div>
