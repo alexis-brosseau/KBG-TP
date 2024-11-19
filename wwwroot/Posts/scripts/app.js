@@ -27,39 +27,62 @@ function loadForm() {
 }
 
 async function loadHome() {
+    const scrollPanel = document.getElementById("scrollPanel");
     const postsPanel = document.getElementById("postsPanel");
+    const itemLayout = {
+        width: $("#sample").outerWidth(),
+        height: $("#sample").outerHeight()
+    };
+    $("#sample").remove();
 
-    let posts = await fetch("/api/posts?all=true")
-    .then(response => response.json())
-    .catch(error => {
-        console.error("Failed to load posts - " + error);
-    });
+    const pageManger = new PageManager('scrollPanel', 'wordsPanel', itemLayout, async (queryString) => {
+        
+        let posts = [];
+        queryString = queryString == "" ? "?" : queryString;
 
-    posts.forEach(post => {
-        const div = document.createElement("div");
-        const unix = post.Creation;
-        const date = new Date(unix);
-        // format date in french like: Mardi, 12 Janvier 2021 - 17:44:28 with the frist letter in capital
-        const formattedDate = date.toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric", second: "numeric" });
-        const stringDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+        await $.ajax({
+            url: "/api/posts" + queryString,
+            method: "GET",
+            success: function (data) {
+                posts = data;
+            },
+            error: function (error) {
+                console.error("Failed to load posts - " + error);
+            }
+        });
 
-        div.innerHTML = `
-            <div class="header">
-                <div class="category">${post.Category}</div>
-            </div>
-            <div class="body">
-                <img src="${post.Image}" alt="${post.Title}" />
-                <div class="content">
-                    <span class="date">${stringDate}</span>
-                    <span class="title">${post.Title}</span>
-                    <div class="text">${post.Text}</div>
+        if (posts.length === 0) {
+            return true;
+        }
+    
+        posts.forEach(post => {
+            const div = document.createElement("div");
+            const unix = post.Creation;
+            const date = new Date(unix);
+            // format date in french like: Mardi, 12 Janvier 2021 - 17:44:28 with the frist letter in capital
+            const formattedDate = date.toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric", second: "numeric" });
+            const stringDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+    
+            div.innerHTML = `
+                <div class="header">
+                    <div class="category">${post.Category}</div>
                 </div>
-            </div>
-        `;
+                <div class="body">
+                    <img src="${post.Image}" alt="${post.Title}" />
+                    <div class="content">
+                        <span class="date">${stringDate}</span>
+                        <span class="title">${post.Title}</span>
+                        <div class="text">${post.Text}</div>
+                    </div>
+                </div>
+            `;
+    
+            div.id = `${post.Id}`;
+            div.className = "post no-select";
+    
+            postsPanel.appendChild(div);
+        });
 
-        div.id = `${post.Id}`;
-        div.className = "post no-select";
-
-        postsPanel.appendChild(div);
+        return false;
     });
 }

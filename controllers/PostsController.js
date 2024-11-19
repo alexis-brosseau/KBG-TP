@@ -12,9 +12,7 @@ export default class PostsController extends Controller {
 
     get() {
         if (this.HttpContext.path.queryString) {
-            
-            let data = this.repository.getAll();
-            this.HttpContext.response.JSON(data);
+            super.get();
             return;
         }
 

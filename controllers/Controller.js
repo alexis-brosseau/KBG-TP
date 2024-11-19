@@ -11,7 +11,7 @@ export default class Controller {
     }
     get(id) {
         if (this.repository != null) {
-            if (id !== '') {
+            if (id !== '' && !isNaN(id)) {
                 // if (!isNaN(id)) {
                 let data = this.repository.get(id);
                 if (data != null)
