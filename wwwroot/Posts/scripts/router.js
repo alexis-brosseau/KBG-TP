@@ -15,6 +15,7 @@ const routes = {
         title: 'Create Post',
         path: '/posts/pages/form.html',
         onload: () => {
+            loadForm();
             initImageUploaders();
         }
     }
@@ -23,6 +24,7 @@ const routes = {
 function route(event) {
     event.preventDefault();
     window.history.pushState({}, '', event.target.href);
+    handleLocation();
 }
 
 async function handleLocation() {

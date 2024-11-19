@@ -6,13 +6,22 @@
     font-family: "Fredoka", sans-serif;
 
     --ocean: #133E87;
-    --kelp: #1B4242;
+    --kelp: #04837B;
 }
 
 body {
     height: 100%;
     width: 100%;
     margin: 0;
+}
+
+.no-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.no-select {
+    user-select: none;
 }
 
 #root {
@@ -28,6 +37,28 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding: 0.5em 1em;
+    box-sizing: border-box;
+}
+
+#nav-title {
+    color: var(--kelp);
+    font-size: 2em;
+    font-family: "Cherry Bomb One";
+}
+
+.nav-btn {
+    padding: 0.5em 1em;
+    background-color: #eee;
+    border: none;
+    border-radius: 5em;
+    font-size: 1em;
+    font-family: "Fredoka", sans-serif;
+    cursor: pointer;
+}
+
+.nav-btn:hover {
+    background-color: #ddd;
 }
 
 #page {
@@ -73,19 +104,6 @@ body {
     margin-top: -10px;
 }
 
-#home #content .post {
-    display: flex;
-    flex-direction: row;
-    gap: 1em;
-    padding: 1em;
-}
-
-#home #content .post .info {
-    display: flex;
-    flex-direction: column;
-}
-
-
 .text-input {
     padding: 0.5em 1em;
     background-color: #eee;
@@ -101,12 +119,167 @@ body {
 }
 
 .imageUploader {
+    background-color: #eee;
+    height: 16em;
+    width: 16em;
+    border-radius: 1em !important;
+    padding: 0.5em!important;
+    cursor: pointer;
+}
+
+.imageUploader:active {
+    background-color: #ddd;
+}
+
+#form {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 1em;
-    background-color: #ccc;
-    height: 10em;
-    width: 10em;
+    padding: 1em;
+}
+
+#form input[type="text"] {
+    padding: 0.5em 1em;
+    background-color: #eee;
+    border: none;
+    border-radius: 5em;
+    font-size: 1.2em;
+    font-family: "Fredoka", sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#form input[type="text"]:focus {
+    outline: none;
+    background-color: #ddd;
+}
+
+#form input[type="submit"] {
+    padding: 0.5em 1em;
+    background-color: #eee;
+    border: none;
+    border-radius: 5em;
+    font-size: 1.2em;
+    font-family: "Fredoka", sans-serif;
+    cursor: pointer;
+}
+
+#form input[type="submit"]:hover {
+    background-color: #ddd;
+}
+
+#form textarea {
+    padding: 0.5em 1em;
+    background-color: #eee;
+    border: none;
+    border-radius: 1em 1em 0em 1em;
+    font-size: 1.2em;
+    font-family: "Fredoka", sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+    resize: vertical;
+    min-height: 2.4em;
+}
+
+#form textarea:focus {
+    outline: none;
+    background-color: #ddd;
+}
+
+
+#post-form {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    padding: 1em;
+    background-color: #bbb;
+    border-radius: 1em;
+    box-sizing: border-box;
+}
+
+.scrollContainer {
+    margin-top: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    border-top: 1px solid lightgray;
+    height: inherit;
+}
+
+.postsContainer {
+    margin: auto;
+    margin-left: 8px;
+    max-width: 1600px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 40em);
+}
+
+.post {
+    max-width: 40em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1em;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+}
+
+.post .category {
+    background-color: var(--kelp);
+    padding: 0.5em 1em;
+    border-radius: 1em;
+    box-sizing: border-box;
+    width: fit-content;
+}
+
+.post img {
+    width: 100%;
+    height: 20em;
+    object-fit: cover;
+    border-radius: 1em 1em 0em 0em;
+    box-sizing: border-box;
+}
+
+.post .content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    background-color: #fff;
+    color: #000;
+    padding: 1em;
+    border-radius: 0em 0em 1em 1em;
+}
+
+.post .date {
+    color : #999;
+    font-size: 0.8em;
+}
+
+.post .title {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    max-height: 1.2em;
+    overflow: hidden;
+}
+
+.post .text {
+    display: -webkit-box;
+    font-size: 1em;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.post .body {
+    display: flex;
+    flex-direction: column;
+    gap:0;
 }

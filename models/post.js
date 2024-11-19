@@ -9,7 +9,7 @@ export default class Post extends Model {
         this.addField('Text', 'string');
         this.addField('Category', 'string');
         this.addField('Image', 'asset');
-        this.addField('Category', 'integer');
+        this.addField('Creation', 'integer');
     
         this.setKey("Id");
     }

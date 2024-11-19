@@ -1,14 +1,13 @@
 <div id="form">
-    <h1>Form</h1>
-    <form action="/api/posts" method="post">
-        <input id="datetime" type="hidden" name="Creation" value="CurrentDateTime">
+    <h1>Ajouter un article</h1>
+    <form id="post-form">
         <input type="text" name="Title" placeholder="Title">
-        <input type="text" name="Text" placeholder="Text">
+        <textarea name="Text" placeholder="Text"></textarea>
         <input type="text" name="Category" placeholder="Category">
         <div 
             id='0' 
             class='imageUploader'  
-            controlId='PhotoImageData' 
+            controlId='Image'
             imageSrc='/posts/assets/no_image.png'
             newImage="true"
             waitingImage="/posts/assets/Loading_icon.gif">

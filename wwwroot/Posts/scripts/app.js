@@ -1,23 +1,19 @@
 function loadForm() {
 
-    document.getElementById("form").addEventListener("submit", async function(event) {
+    document.getElementById("post-form").addEventListener("submit", async function(event) {
         event.preventDefault();
-
+        
+        console.log("Form submitted");
         document.getElementById("datetime").value = Date.now().toString();
         const data = new FormData(event.target);
-
-        let payload = {};
-        data.forEach((value, key) => {
-            payload[key] = value;
-            console.log(key, value);
-        });
+        data.append("Creation", Date.now().toString());
 
         const response = await fetch("/api/posts", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: body
+            body: new URLSearchParams(data).toString()
         })
         .catch(error => {
             console.error("Failed to create post");
@@ -31,30 +27,39 @@ function loadForm() {
 }
 
 async function loadHome() {
-    const content = document.getElementById("content");
+    const postsPanel = document.getElementById("postsPanel");
 
     let posts = await fetch("/api/posts?all=true")
     .then(response => response.json())
     .catch(error => {
-        console.error("Failed to load posts");
+        console.error("Failed to load posts - " + error);
     });
 
     posts.forEach(post => {
-        console.log(post);
         const div = document.createElement("div");
+        const unix = post.Creation;
+        const date = new Date(unix);
+        // format date in french like: Mardi, 12 Janvier 2021 - 17:44:28 with the frist letter in capital
+        const formattedDate = date.toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric", second: "numeric" });
+        const stringDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+
         div.innerHTML = `
-            <img src="${post.Image}" alt="${post.Title}" />
-            <div class="info">
-                <h2>${post.Title}</h2>
-                <span>${post.Text}</span>
-                <span>${post.Category}</span>
-                <span>${post.Creation}</span>
+            <div class="header">
+                <div class="category">${post.Category}</div>
+            </div>
+            <div class="body">
+                <img src="${post.Image}" alt="${post.Title}" />
+                <div class="content">
+                    <span class="date">${stringDate}</span>
+                    <span class="title">${post.Title}</span>
+                    <div class="text">${post.Text}</div>
+                </div>
             </div>
         `;
 
-        div.id = `post-${post.Id}`;
-        div.className = "post";
+        div.id = `${post.Id}`;
+        div.className = "post no-select";
 
-        content.appendChild(div);
+        postsPanel.appendChild(div);
     });
 }
