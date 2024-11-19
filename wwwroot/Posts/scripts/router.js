@@ -7,12 +7,16 @@ const routes = {
     '/api/posts': {
         title: 'Posts',
         path: '/posts/pages/home.html',
-        onload: loadHome
+        onload: () => {
+            loadHome();
+        }
     },
     '/api/posts/create': {
         title: 'Create Post',
         path: '/posts/pages/form.html',
-        onload: loadForm
+        onload: () => {
+            initImageUploaders();
+        }
     }
 };
 

@@ -64,10 +64,10 @@ var currentId = 0;
 // Accepted file formats
 let acceptedFileFormat = "image/jpeg,image/jpg,image/gif,image/png,image/bmp,image/webp,image/avif";
 
-$(document).ready(() => {
-    /* you can have more than one file uploader */
-    initImageUploaders();
-});
+// $(document).ready(() => {
+//     /* you can have more than one file uploader */
+//     initImageUploaders();
+// });
 
 function initImageUploaders() {
     $('.imageUploader').each(function () {

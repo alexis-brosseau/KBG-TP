@@ -99,3 +99,14 @@ body {
     outline: none;
     background-color: #ddd;
 }
+
+.imageUploader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    background-color: #ccc;
+    height: 10em;
+    width: 10em;
+}

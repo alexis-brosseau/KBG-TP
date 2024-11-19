@@ -1,4 +1,5 @@
 function loadForm() {
+
     document.getElementById("form").addEventListener("submit", async function(event) {
         event.preventDefault();
 
