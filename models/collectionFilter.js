@@ -258,6 +258,8 @@ export default class collectionFilter {
                 for (let keyword of this.keywords) {
                     if (record.indexOf(keyword.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')) == -1) {
                         keep = false;
+                        console.log(keyword);
+                        console.log(record.indexOf(keyword));
                         break;
                     }
                 }

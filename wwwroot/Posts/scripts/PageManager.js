@@ -29,14 +29,15 @@ class PageManager {
         this.currentPage.limit = nbRows * nbColumns + nbColumns /* make sure to always have a content overflow */;
     }
     currentPageToQueryString(append = false) {
-        this.setCurrentPageLimit();
-        let limit = this.currentPage.limit;
+        
         let offset = this.currentPage.offset;
         if (!append) {
-            limit = limit * (offset + 1);
+            this.setCurrentPageLimit();
             offset = 0;
         }
-        return `?limit=${limit}&offset=${offset}`;
+        let limit = this.currentPage.limit;
+
+        return `&limit=${limit}&offset=${offset}`;
     }
     scrollToElem(elemId) {
         this.scrollPanel.animate({
@@ -60,21 +61,15 @@ class PageManager {
         document.body.scrollTop = this.previousScrollPosition;
     }
     async update(append = true) {
-        
         this.storeScrollPosition();
         if (!append) this.itemsPanel.empty();
         let endOfData = await this.getItems(this.currentPageToQueryString(append));
         this.restoreScrollPosition();
         let instance = this;
-        // this.scrollPanel.scroll(function () {
-        //     if (!endOfData && (instance.scrollPanel.scrollTop() + instance.scrollPanel.outerHeight() >= instance.itemsPanel.outerHeight() - instance.itemLayout.height / 2)) {
-        //         instance.scrollPanel.off();
-        //         instance.currentPage.offset++;
-        //         instance.update(true);
-        //     }
-        // });
+
         $(document).scroll(function () {
             if (!endOfData && $(document).scrollTop() + $(window).height() >= $(document).height()) {
+                $(document).off();
                 instance.scrollPanel.off();
                 instance.currentPage.offset++;
                 instance.update(true);

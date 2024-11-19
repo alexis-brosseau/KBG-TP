@@ -27,6 +27,7 @@ function loadForm() {
 }
 
 async function loadHome() {
+    const search = document.getElementById("search");
     const scrollPanel = document.getElementById("scrollPanel");
     const postsPanel = document.getElementById("postsPanel");
     const itemLayout = {
@@ -35,13 +36,21 @@ async function loadHome() {
     };
     $("#sample").remove();
 
-    const pageManger = new PageManager('scrollPanel', 'wordsPanel', itemLayout, async (queryString) => {
+    const pageManger = new PageManager('scrollPanel', 'postsPanel', itemLayout, async (queryString) => {
         
+        let keywords = (search.value != "") ? search.value.split(" ") : [];
+
         let posts = [];
         queryString = queryString == "" ? "?" : queryString;
+        
+        let url = `/api/posts?sort=Creation,desc`
+        if (keywords.length > 0) {
+            url += `&keywords=${keywords.join(",")}`;
+        }
+        url += queryString;
 
         await $.ajax({
-            url: "/api/posts" + queryString,
+            url: url,
             method: "GET",
             success: function (data) {
                 posts = data;
@@ -59,13 +68,15 @@ async function loadHome() {
             const div = document.createElement("div");
             const unix = post.Creation;
             const date = new Date(unix);
-            // format date in french like: Mardi, 12 Janvier 2021 - 17:44:28 with the frist letter in capital
             const formattedDate = date.toLocaleString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric", second: "numeric" });
             const stringDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
     
             div.innerHTML = `
                 <div class="header">
                     <div class="category">${post.Category}</div>
+                    <div>
+                        <span class="remove btn" data-id="${post.Id}">Retirer</span>
+                    </div>
                 </div>
                 <div class="body">
                     <img src="${post.Image}" alt="${post.Title}" />
@@ -81,8 +92,33 @@ async function loadHome() {
             div.className = "post no-select";
     
             postsPanel.appendChild(div);
+
+            div.querySelector(".remove").addEventListener("click", async function() {
+                if (!confirm("Voulez vous vraiment supprimer ce post ?")) {
+                    console.log("Post deletion cancelled");
+                    return;
+                }
+                
+                const id = $(this).data("id");
+                const response = await fetch(`/api/posts/${id}`, {
+                    method: "DELETE"
+                })
+                .catch(error => {
+                    console.error("Failed to delete post");
+                });
+    
+                if (response.ok) {
+                    pageManger.reset();
+                }
+            });
         });
 
         return false;
+    });
+
+    search.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+            pageManger.reset();
+        }
     });
 }
