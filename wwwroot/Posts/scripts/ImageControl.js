@@ -173,7 +173,7 @@ function initImageUploaders() {
             $(this).css('border', '2px solid white');
             return true;
         });
-        ImageUploader_AttachEvent(controlId);
+        ImageUploader_AttachEvent(id, controlId);
         let controlIdTop = - $(this).height() / 2;
         let controlIdLeft = 4;
         $(`#${controlId}`).css("z-index","-1");
@@ -186,9 +186,13 @@ function initImageUploaders() {
     });
 }
 
-function ImageUploader_AttachEvent(controlId) {
+function ImageUploader_AttachEvent(id, controlId) {
     // one click will be transmitted to #ImageUploader
     document.querySelector('#' + controlId + '_UploadedImage').
+        addEventListener('click', () => {
+            document.querySelector('#' + controlId + '_ImageUploader').click();
+        });
+    document.querySelector('#' + id).
         addEventListener('click', () => {
             document.querySelector('#' + controlId + '_ImageUploader').click();
         });

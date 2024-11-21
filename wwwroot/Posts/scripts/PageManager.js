@@ -30,11 +30,12 @@ class PageManager {
     }
     currentPageToQueryString(append = false) {
         
-        let offset = this.currentPage.offset;
         if (!append) {
             this.setCurrentPageLimit();
-            offset = 0;
+            this.currentPage.offset = 0;
         }
+        
+        let offset = this.currentPage.offset;
         let limit = this.currentPage.limit;
 
         return `&limit=${limit}&offset=${offset}`;
@@ -48,15 +49,18 @@ class PageManager {
         return document.body.scrollTop;
     }
     storeScrollPosition() {
+        $(document).off();
         this.scrollPanel.off();
         this.previousScrollPosition = document.body.scrollTop;
     }
     resetScrollPosition() {
         this.currentPage.offset = 0;
+        $(document).off();
         this.scrollPanel.off();
         document.body.scrollTop = 0;
     }
     restoreScrollPosition() {
+        $(document).off();
         this.scrollPanel.off();
         document.body.scrollTop = this.previousScrollPosition;
     }
@@ -68,7 +72,8 @@ class PageManager {
         let instance = this;
 
         $(document).scroll(function () {
-            if (!endOfData && $(document).scrollTop() + $(window).height() >= $(document).height()) {
+            if (!endOfData && $(document).scrollTop() + $(window).height() >= $(document).height() - 100) {
+                console.log("Loading more data");
                 $(document).off();
                 instance.scrollPanel.off();
                 instance.currentPage.offset++;

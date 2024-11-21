@@ -1,17 +1,17 @@
 <div id="form">
     <h1>Ajouter un article</h1>
     <form id="post-form">
-        <input type="text" name="Title" placeholder="Title">
-        <textarea name="Text" placeholder="Text"></textarea>
-        <input type="text" name="Category" placeholder="Category">
+        <input id="form-title" type="text" name="Title" placeholder="Title">
+        <textarea id="form-text" name="Text" placeholder="Text"></textarea>
+        <input id="form-category" type="text" name="Category" placeholder="Category">
         <div 
-            id='0' 
+            id='form-image' 
             class='imageUploader'  
             controlId='Image'
             imageSrc='/posts/assets/no_image.png'
             newImage="true"
             waitingImage="/posts/assets/Loading_icon.gif">
         </div>
-        <input id="form-submit" type="submit" value="Submit">
+        <input id="form-submit" type="submit" value="Créer">
     </form>
 </div>
